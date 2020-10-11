@@ -1,15 +1,19 @@
+import { HttpRequest, HttpResponse } from '../../protocols/http'
+import { badRequest } from '../../helpers/http-helper'
+
 export class FileController {
-  handle (httpRequest: any): any {
+  handle (httpRequest: HttpRequest): HttpResponse {
     const requiredFields = ['fileName', 'fileType']
 
     for (const field of requiredFields) {
       if (!httpRequest.body[field]) {
-        return {
-          statusCode: 400
-        }
+        return badRequest(`Missing required field: ${field}`)
       }
     }
 
-    return {}
+    return {
+      statusCode: 200,
+      body: 'ok'
+    }
   }
 }
